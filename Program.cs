@@ -10,7 +10,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<ShiftContext>(
-    optionsAction: opt => opt.UseSqlServer("Server=localhost;Initial Catalog = Contacts;User Id=sa;password=Password123;TrustServerCertificate=true"));
+    optionsAction: opt => opt.UseSqlServer("Server=localhost;Initial Catalog = Shifts;User Id=sa;password=Password123;TrustServerCertificate=true"));
 
 var app = builder.Build();
 

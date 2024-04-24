@@ -11,7 +11,7 @@ namespace shift_logger.Controllers
 
         // GET: api/Shifts
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ShiftDTO>>> GetShifts()
+        public async Task<ActionResult<IEnumerable<ViewShiftDTO>>> GetShifts()
         {
             return await _context.Shifts.Select(
                 shift => ItemToDTO(shift)).ToListAsync();
@@ -19,7 +19,7 @@ namespace shift_logger.Controllers
 
         // GET: api/Shift/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Shift>> GetShift(int id)
+        public async Task<ActionResult<ViewShiftDTO>> GetShift(int id)
         {
             var shift = await _context.Shifts.FindAsync(id);
 
@@ -28,7 +28,7 @@ namespace shift_logger.Controllers
                 return NotFound();
             }
 
-            return shift;
+            return ItemToDTO(shift);
         }
 
         // PUT: api/Shift/5
@@ -64,14 +64,16 @@ namespace shift_logger.Controllers
 
         // POST: api/Shift
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        // [HttpPost]
-        // public async Task<ActionResult<ShiftDTO>> PostShift(ShiftDTO shiftDTO)
-        // {
-        //     _context.Shifts.Add(new Shift() { StartTime = shiftDTO.StartTime, EndTime = shiftDTO.EndTime });
-        //     await _context.SaveChangesAsync();
+        [HttpPost]
+        public async Task<ActionResult<ViewShiftDTO>> PostShift(AddShiftDTO shiftDTO)
+        {
+            Shift dbShift = new() { StartTime = shiftDTO.StartTime, EndTime = shiftDTO.EndTime };
+            dbShift = _context.Shifts.Add(dbShift).Entity;
+            await _context.SaveChangesAsync();
 
-        //     return CreatedAtAction(nameof(PostShift), new { id = shiftDTO.Id }, shiftDTO);
-        // }
+            ViewShiftDTO outputShift = ItemToDTO(dbShift);
+            return CreatedAtAction(nameof(GetShift), new { dbShift.Id }, outputShift);
+        }
 
         // DELETE: api/Shift/5
         [HttpDelete("{id}")]
@@ -94,9 +96,11 @@ namespace shift_logger.Controllers
             return _context.Shifts.Any(e => e.Id == id);
         }
 
-        private static ShiftDTO ItemToDTO(Shift shift)
+        private static ViewShiftDTO ItemToDTO(Shift shift)
         {
-            return new ShiftDTO() { StartTime = shift.StartTime, EndTime = shift.EndTime };
+
+            var result = new ViewShiftDTO() { Id = shift.Id, StartTime = shift.StartTime, EndTime = shift.EndTime };
+            return result;
         }
     }
 }

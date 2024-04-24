@@ -8,5 +8,4 @@ public class Shift
 
     public DateTime EndTime { get; set; }
 
-    public TimeSpan Duration { get => (EndTime - StartTime).Duration(); }
 }
