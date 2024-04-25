@@ -34,33 +34,33 @@ namespace shift_logger.Controllers
         // PUT: api/Shift/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutShift(int id, Shift shift)
-        {
-            if (id != shift.Id)
-            {
-                return BadRequest();
-            }
+        // public async Task<IActionResult> PutShift(int id, Shift shift)
+        // {
+        //     if (id != shift.Id)
+        //     {
+        //         return BadRequest();
+        //     }
 
-            _context.Entry(shift).State = EntityState.Modified;
+        //     _context.Entry(shift).State = EntityState.Modified;
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ShiftExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+        //     try
+        //     {
+        //         await _context.SaveChangesAsync();
+        //     }
+        //     catch (DbUpdateConcurrencyException)
+        //     {
+        //         if (!ShiftExists(id))
+        //         {
+        //             return NotFound();
+        //         }
+        //         else
+        //         {
+        //             throw;
+        //         }
+        //     }
 
-            return NoContent();
-        }
+        //     return NoContent();
+        // }
 
         // POST: api/Shift
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
