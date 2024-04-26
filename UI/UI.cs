@@ -1,5 +1,5 @@
 ﻿using System.Net.Http.Headers;
-using System.Runtime.Serialization;
+using System.Net.Http.Json;
 using System.Text.Json;
 using InputHelpers;
 
@@ -8,6 +8,7 @@ namespace UI;
 public class UIApp
 {
     readonly GetTypesFromTerminal getTypes;
+
     readonly HttpClient client;
 
     public UIApp(string url)
@@ -23,14 +24,6 @@ public class UIApp
 
     public async Task Run()
     {
-
-        //Creating a new entry
-        //Ask for start time
-        //Ask for end time
-        /*Send request to create
-
-        //Get all the shifts
-        */
         while (true)
         {
             Console.Clear();
@@ -44,9 +37,9 @@ public class UIApp
                 DateTime startTime = GetDateTime();
                 DateTime endTime = GetDateTime();
                 AddShift shift = new() { StartTime = startTime, EndTime = endTime };
-                //Add record here.
-                await PostShiftAsync(shift);
+                ShiftRecord record = await PostShiftAsync(shift);
                 Console.WriteLine("Record added successfully.");
+                Console.ReadKey();
                 continue;
 
             }
@@ -69,9 +62,6 @@ public class UIApp
             }
             else
             {
-                //Invalid operation
-                //Press any key to return to the main menu
-                //Return to main
                 Console.WriteLine("\nInvalid operation entered.\nPress any key to restart.");
                 Console.ReadKey();
                 continue;
@@ -108,7 +98,12 @@ public class UIApp
 
     public async Task<ShiftRecord> PostShiftAsync(AddShift shift)
     {
-        throw new NotImplementedException();
+
+        HttpResponseMessage response = await client.PostAsJsonAsync(client.BaseAddress, shift);
+        Stream jsonStream = await response.Content.ReadAsStreamAsync();
+        ShiftRecord record = await JsonSerializer.DeserializeAsync<ShiftRecord>(jsonStream);
+        return record;
+
     }
 
     public DateTime GetDateTime()
