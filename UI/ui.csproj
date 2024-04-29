@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <PackageReference Include="InputHelpers" Version="1.0.0" />
+    <PackageReference Include="spectre.console" Version="0.49.1" />
   </ItemGroup>
 
 </Project>
