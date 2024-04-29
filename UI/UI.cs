@@ -2,6 +2,7 @@
 using System.Net.Http.Json;
 using System.Text.Json;
 using InputHelpers;
+using Spectre.Console;
 
 namespace UI;
 
@@ -50,8 +51,13 @@ public class UIApp
             List<ShiftRecord> shiftRecords = await GetShiftsAsync();
             if (shiftRecords.Count > 0)
             {
-                Console.WriteLine("Id\tStartTime\t\tEndTime\t\t\tDuration\n");
-                shiftRecords.ForEach(e => Console.WriteLine($"{e.Id}\t{e.StartTime:dd-mm-yyyy HH:mm:ss}\t{e.EndTime:dd-mm-yyyy HH:mm:ss}\t{e.Duration}"));
+                Table table = new();
+                table.AddColumns(["Id", "Start Time", "End Time", "Duration"]);
+                shiftRecords.ForEach(e => table.AddRow($"{e.Id}",
+                $"{e.StartTime:dd-mm-yyyy HH:mm:ss}",
+                $"{e.EndTime:dd-mm-yyyy HH:mm:ss}",
+                $"{e.Duration}"));
+                AnsiConsole.Write(table);
             }
             else
             {
