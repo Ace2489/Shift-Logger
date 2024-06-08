@@ -2,7 +2,7 @@
 
 ## Overview
 
-The Shift Logger application is a comprehensive tool designed to help manage and log work shifts efficiently. The system includes an API built with ASP.NET Core and a user interface using Spectre.Console. The application allows users to create, view, and delete work shift records, offering both backend API functionalities and a simple console-based UI for interaction.
+A tool designed to help manage and log work shifts efficiently. The system includes an API built with ASP.NET Core and a user interface using Spectre.Console. The application allows users to create, view, and delete work shift records, offering backend API functionalities and a simple console-based UI for interaction.
 
 ## Features
 
@@ -16,7 +16,7 @@ The Shift Logger application is a comprehensive tool designed to help manage and
 
 - **Console-Based UI**: Implements a user-friendly console interface using Spectre.Console for interactive operations.
 - **Shift Management**: Allows users to create new shifts, view existing shifts in a tabular format, and handle shift data efficiently.
-- **HTTP Client Integration**: Interacts with the API via http requests to perform necessary operations.
+- **HTTP Client Integration**: Interacts with the API via HTTP requests to perform necessary operations.
 
 ## Getting Started
 
