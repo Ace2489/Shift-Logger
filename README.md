@@ -44,7 +44,7 @@ The Shift Logger application is a comprehensive tool designed to help manage and
 3. **Run Migrations**:
     Apply migrations to set up the database schema:
     ```bash
-    dotnet ef migrations add InitialCreate
+    cd API
     dotnet ef database update
     ```
 
